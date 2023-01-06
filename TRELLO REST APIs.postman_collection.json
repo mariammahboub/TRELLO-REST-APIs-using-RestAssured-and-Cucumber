@@ -1,0 +1,405 @@
+{
+	"info": {
+		"_postman_id": "e4ff0676-4a57-4aa0-92f5-fa2568712892",
+		"name": "TRELLO REST APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25123887"
+	},
+	"item": [
+		{
+			"name": "Create Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Close \", function(){\r",
+							"var dataClose=pm.response.json();\r",
+							"pm.expect(dataClose.closed).to.eql(false);\r",
+							"});\r",
+							"pm.test(\"Premission Level \", function(){\r",
+							"var text=pm.response.text();\r",
+							"pm.expect(text).to.include(\"PremissionLevel\")\r",
+							"});\r",
+							"pm.test(\"Public \", function(){\r",
+							"var dataPublic=pm.response.json();\r",
+							"pm.expect(dataPublic.profs.canBePublic).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Invite \", function(){\r",
+							"var dataInvite=pm.response.json();\r",
+							"pm.expect(dataInvite.profs.canBeInvite).to.eql(true);\r",
+							"});\r",
+							"console.log(pm.response.json(0).id)\r",
+							"pm.collectionVariables.set(\"Board\",pm.response.json().id)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/1/boards/?name={First Trello Of PostMan}&key={{key}}&token={{token}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{First Trello Of PostMan}"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json().id)\r",
+							"pm.collectionVariables.set(\"lists\",pm.response.json().id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/lists?name=TRELLO REST APIs\n&token={{token}}&idBoard={{idBoard}}&key={{key}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "TRELLO REST APIs\n"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{idBoard}}"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBoard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json().id)\r",
+							"pm.collectionVariables.set(\"get Board\",pm.response.json().id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/boards/{{id}}?key={{key}}&token={{token}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/boards/{{id}}/lists?key={{key}}&token={{token}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{id}}",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive a list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json().id)\r",
+							"pm.collectionVariables.set(\"archive list\",pm.response.json().id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/lists/{{idBoard}}/closed?key={{key}}&token={{token}}&value=true",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"lists",
+						"{{idBoard}}",
+						"closed"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "value",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Board",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/boards/:id?key={{key}}&token={{token}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						":id"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idBoard}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Un Archive a list",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/lists/{{idBoard}}/closed?key={{key}}&token={{token}}&value=false",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"lists",
+						"{{idBoard}}",
+						"closed"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "value",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Organization",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/organizations/:idOrganization?key={{key}}&token={{token}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"organizations",
+						":idOrganization"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "idOrganization",
+							"value": "{{idOrganization}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json().id)\r",
+							"pm.collectionVariables.set(\"organizations\",pm.response.json().id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/1/organizations?displayName=organization&key={{key}}&token={{token}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"1",
+						"organizations"
+					],
+					"query": [
+						{
+							"key": "displayName",
+							"value": "organization"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "organizations",
+			"value": ""
+		}
+	]
+}
